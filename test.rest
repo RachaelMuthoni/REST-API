@@ -1,6 +1,5 @@
 GET http://localhost:8000
 ###
-
 GET http://localhost:8000/users
 ###
 GET http://localhost:8000/user/acraigmyle3@homestead.com
@@ -11,4 +10,16 @@ Content-Type: application/json
 {
     "email":"ostroder2@xinhuanet.com",
     "Password":"12Xk4eIO"
+}
+###
+POST http://localhost:8000/createuser
+Content-Type: application/json
+
+{
+  "id":1,
+  "first_name":"Monty",
+  "last_name":"Jopp",
+  "email":"mjopp0@merriam-webster.com",
+  "gender":"Male",
+  "Password":"uehSLnl"
 }

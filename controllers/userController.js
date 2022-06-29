@@ -1,10 +1,45 @@
 const data = require('../MOCK_DATA.json');
+const sqlConfig = require('../config/config');
+const { user } = require('../config/config');
+const poolPromise = require('../config/poolPromise')
+const mssql = require('mssql')
 
+module.exports ={
+    
+    home:(req,res)=>{
+        res.send('Hello there...')
+    },
 
-function home(req,res){
-    res.send('Hello there...')
-}
-
+    create: async(req, res)=>{
+        let {id, first_name, last_name, email, gender, Password} = req.body
+            let pool = await poolPromise()
+            pool.query(`insert into data 
+                        VALUES('${id}', '${first_name}', '${last_name}', '${email}', '${gender}', '${Password}')`)
+                        .then(results=>{
+                            if(results.rowsAffected){
+                                res.send("User has been added")
+                                console.log("User has been added")
+                            }
+                        })
+            
+        },
+        
+        getUsers: async(req, res)=>{
+            let pool = await poolPromise()
+            pool.query(`select * FROM data`)
+            .then(results=>{
+                console.log(results.recordset)
+                res.json({
+                    status:200,
+                    success: true,
+                    message: "Here are the users existing in our database",
+                    results:results.recordset
+                })
+            })
+        }
+        
+}   
+/*
 function getUsers(req,res){
     const users = {
             Status:200,
@@ -19,7 +54,7 @@ function getUsers(req,res){
         Message:"Could not fetch users",
         Data: []
     }
-    res.send()
+    
 }
 
 function getUser (req,res){
@@ -59,4 +94,4 @@ function login (req,res){
         Results:{}
     })
 }
-module.exports = {home,getUsers,getUser,login}
+module.exports = {home,getUsers,getUser,login}*/
