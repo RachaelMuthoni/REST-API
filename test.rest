@@ -2,7 +2,7 @@ GET http://localhost:8000
 ###
 GET http://localhost:8000/users
 ###
-GET http://localhost:8000/user/acraigmyle3@homestead.com
+GET http://localhost:8000/user/ostroder2@xinhuanet.com
 ###
 POST http://localhost:8000/login
 Content-Type: application/json
@@ -16,10 +16,10 @@ POST http://localhost:8000/createuser
 Content-Type: application/json
 
 {
-  "id":1,
-  "first_name":"Monty",
-  "last_name":"Jopp",
-  "email":"mjopp0@merriam-webster.com",
-  "gender":"Male",
-  "Password":"uehSLnl"
-}
+        "id": 4,
+        "first_name": "Analise",
+        "last_name": "Craigmyle",
+        "email": "acraigmyle3@homestead.com",
+        "gender": "Female",
+        "Password": "ihOg7S"
+    }

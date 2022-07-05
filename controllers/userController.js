@@ -28,7 +28,7 @@ module.exports ={
             let pool = await poolPromise()
             pool.query(`select * FROM data`)
             .then(results=>{
-                console.log(results.recordset)
+                
                 res.json({
                     status:200,
                     success: true,
@@ -36,9 +36,60 @@ module.exports ={
                     results:results.recordset
                 })
             })
-        }
+        },
         
-}   
+        getUser: async(req, res)=>{
+            const {email} = req.params
+            let pool = await poolPromise()
+            pool.query(`select * from data where email='${email}'`)
+            .then(results=>{
+                let user=results.recordset[0]
+                if(user){
+                    return res.status(200).json({
+                        status:200,
+                        success: true,
+                        message: "You found the user",
+                        results:user 
+                    })
+                }
+                res.status(404).json({
+                    status:404,
+                    success: false,
+                    message: "Could not find user",
+                    results:{}
+                })
+                
+                })
+            },
+            login: async (req, res)=>{
+                const {email, password} = req.body
+                let pool = await poolPromise()
+                pool.query(`select * FROM data WHERE email='${email}'`)
+                .then(results=>{
+                    let user=results.recordset[0]
+                    if(user){
+                        let pass=user.password
+                        if(password===pass){
+                                return res.json({
+                                    status:200,
+                                    success: true,
+                                    message: "Logged in successfully",
+                                    results:user
+                                })
+        
+                        }
+                        res.status(404).json({
+                                    status:404,
+                                    success: false,
+                                    message: "Couldn't login. Check your credentials",
+                                    results:{}
+                        })
+                        }                        
+                    })
+            }
+}
+        
+   
 /*
 function getUsers(req,res){
     const users = {
